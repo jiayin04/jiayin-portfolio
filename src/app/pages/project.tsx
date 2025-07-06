@@ -44,7 +44,13 @@ const Project = () => {
     ];
 
     return (
-        <div id="projects" className="py-2 min-h-[80vh] pr-8 mb-5">
+        <div
+            id="projects"
+            className="py-2 min-h-[80vh] pr-8"
+            style={{
+                backgroundImage: `linear-gradient(to bottom, hsl(var(--section-project-from)), hsl(var(--section-project-to)))`,
+            }}
+        >
             <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}

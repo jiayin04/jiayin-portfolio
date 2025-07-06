@@ -36,6 +36,15 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    /* New Added */
+    --section-project-from: 0 0% 100%;
+    --section-project-to: 220 100% 98.96%;
+    --section-skills-from: 220 100% 98.96%;
+    --section-skills-to: 220 100% 98.96%;
+    --section-experience-from: 220 100% 98.96%;
+    --section-experience-to: 240 28% 95%;
+    --section-footer-from: 240 28% 95%;
+    --section-footer-to: 0 0% 100%;
   }
 
   .dark {
@@ -64,6 +73,15 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    /* New Added */
+    --section-project-from: 260 20.61% 4.7%;
+    --section-project-to: 270 43.79% 13.25%;
+    --section-skills-from: 270 43.79% 13.5%;
+    --section-skills-to: 280 42.9% 8.92%;
+    --section-experience-from: 280 42.9% 8.92%;
+    --section-experience-to: 240 100% 14%;
+    --section-footer-from: 240 100% 14%;
+    --section-footer-to: 260 20.61% 4.7%;
   }
 }
 
@@ -96,4 +114,5 @@ body {
   .light .backgroundImage {
     background-image: url('/light_theme.jpg');
   }
+
 }

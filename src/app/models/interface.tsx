@@ -6,3 +6,11 @@ export interface ProjectInterface {
     projectLink: string;
     demoLink: string;
 }
+
+export interface ExperienceInterface {
+    title: string;
+    desc: string;
+    image?: string;
+    date: Date;
+    category: "General" | "Volunteer" | "Event" | "Job";
+}

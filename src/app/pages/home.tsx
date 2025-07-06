@@ -86,9 +86,9 @@ const HomePage = () => {
                             <Link href="https://www.linkedin.com/in/jia-yin-kok-9767b528a/" target="_blank">
                                 <Image src="https://skillicons.dev/icons?i=linkedin" width={50} height={50} alt="LinkedIn" />
                             </Link>
-                            <Link href="https://discordapp.com/users/1006886530612203640" target="_blank">
+                            {/* <Link href="https://discordapp.com/users/1006886530612203640" target="_blank">
                                 <Image src="https://skillicons.dev/icons?i=discord" width={50} height={50} alt="Discord" />
-                            </Link>
+                            </Link> */}
                             <Link href={"mailto:jiayinkok@gmail.com"}>
                                 <Image src={"https://skillicons.dev/icons?i=gmail"} width={50} height={50} alt="Gmail" />
                             </Link>

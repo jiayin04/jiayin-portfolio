@@ -32,6 +32,7 @@ import HomePage from "./pages/home";
 import About from "./pages/about";
 import Project from "./pages/project";
 import Skills from "./pages/skills";
+import Experience from "./pages/experience";
 
 import { useEffect, useState } from "react";
 
@@ -72,6 +73,9 @@ export default function Home() {
       </section>
       <section id="skills">
         <Skills />
+      </section>
+      <section id="experience">
+        <Experience />
       </section>
 
       {/* Footer */}

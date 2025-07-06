@@ -11,7 +11,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const [activeSection, setActiveSection] = useState("");
-  const sections = ["home", "about", "projects", "skills", "contact"];
+  const sections = ["home", "about", "projects", "skills", "experience"];
 
   const dark = theme === "dark";
 
