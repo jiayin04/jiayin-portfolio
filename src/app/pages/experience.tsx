@@ -60,8 +60,8 @@ const Experience = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4}}
-                    
+                    transition={{ duration: 0.8, delay: 0.4 }}
+
                     className="flex flex-wrap justify-center gap-4 mb-10 "
                 >
                     {categories.map((cat) => (
@@ -89,10 +89,11 @@ const Experience = () => {
                                 return (
                                     <motion.div
                                         key={item.title}
-                                        initial={{ opacity: 0, y: 30 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -30 }}
-                                        transition={{ duration: 0.6 }}
+                                        initial={{ opacity: 0, y: 60, scale: 0.95 }}
+                                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                                        exit={{ opacity: 0, y: -30, scale: 0.95 }}
+                                        transition={{ duration: 0.6, ease: "easeOut" }}
+                                        viewport={{ amount: 0.2 }}
                                         className={`flex flex-col md:flex-row items-center md:items-start ${isLeft ? "md:flex-row-reverse" : ""
                                             } gap-6`}
                                     >

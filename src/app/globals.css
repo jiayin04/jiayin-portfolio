@@ -115,4 +115,7 @@ body {
     background-image: url('/light_theme.jpg');
   }
 
+  section {
+    scroll-margin-top: 100px;
+  }
 }

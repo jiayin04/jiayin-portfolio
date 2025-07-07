@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import ProjectCard from "../components/project_card";
 import { ProjectInterface } from "../models/interface";
+import { useState } from "react";
 
 const Project = () => {
     const projects: ProjectInterface[] = [
@@ -31,7 +32,38 @@ const Project = () => {
             projectLink: "https://example.com",
             demoLink: "",
         },
-
+        {
+            title: "Car Park System",
+            description: "An app that allows users to find and pay for parking easily.",
+            image: "/images/car-park.jpg",
+            tags: ["Mobile App", "Next.js", "Stripe"],
+            projectLink: "https://example.com",
+            demoLink: "",
+        },
+        {
+            title: "Car Park System",
+            description: "An app that allows users to find and pay for parking easily.",
+            image: "/images/car-park.jpg",
+            tags: ["Mobile App", "Next.js", "Stripe"],
+            projectLink: "https://example.com",
+            demoLink: "",
+        },
+        {
+            title: "Car Park System",
+            description: "An app that allows users to find and pay for parking easily.",
+            image: "/images/car-park.jpg",
+            tags: ["Mobile App", "Next.js", "Stripe"],
+            projectLink: "https://example.com",
+            demoLink: "",
+        },
+        {
+            title: "Car Park System",
+            description: "An app that allows users to find and pay for parking easily.",
+            image: "/images/car-park.jpg",
+            tags: ["Mobile App", "Next.js", "Stripe"],
+            projectLink: "https://example.com",
+            demoLink: "",
+        },
         {
             title: "Car Park System",
             description: "An app that allows users to find and pay for parking easily.",
@@ -43,10 +75,14 @@ const Project = () => {
 
     ];
 
+    const [showAll, setShowAll] = useState(false);
+
+    const visibleProjects = showAll ? projects : projects.slice(0, 8);
+
     return (
         <div
             id="projects"
-            className="py-2 min-h-[80vh] pr-8"
+            className="py-4 min-h-screen pr-8"
             style={{
                 backgroundImage: `linear-gradient(to bottom, hsl(var(--section-project-from)), hsl(var(--section-project-to)))`,
             }}
@@ -76,7 +112,7 @@ const Project = () => {
                         whileInView={{ opacity: 1 }}
                         transition={{ duration: 0.6, ease: "easeIn" }}
                     >
-                        {projects.map((project, index) => (
+                        {visibleProjects.map((project, index) => (
                             <motion.div
                                 key={index}
                                 variants={{
@@ -89,6 +125,19 @@ const Project = () => {
                             </motion.div>
                         ))}
                     </motion.div>
+
+                    {/* View More Button */}
+                    {projects.length > 8 && (
+                        <div className="flex justify-center mt-20">
+                            <button
+                                onClick={() => setShowAll(!showAll)}
+                                className="px-5 py-2 border rounded-full text-sm font-medium transition-all duration-200 
+                  border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white"
+                            >
+                                {showAll ? "View Less" : "View More"}
+                            </button>
+                        </div>
+                    )}
                 </div>
             </motion.div>
         </div>

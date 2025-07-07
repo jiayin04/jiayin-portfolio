@@ -1,31 +1,5 @@
-// import Navbar from "./components/navbar";
-// import Footer from "./components/footer";
-// import HomePage from "./pages/home";
-// import { About } from "./pages/about";
-// import { Project } from "./pages/project";
-// import { Skills } from "./pages/skills";
-
-// export default function Home() {
-
-//   return (
-//     <div className="relative flex flex-col font-[family-name:var(--font-inter)] min-h-screen overflow-x-hidden">
-//       <div className="absolute inset-0 bg-cover bg-center bg-no-repeat backgroundImage z-[-1]">
-//         <div className="absolute inset-0 backdrop-blur-xl"></div>
-//       </div>
-//       <Navbar></Navbar>
-//       <div className="relative flex flex-col gap-8 row-start-2 items-center sm:items-start flex-grow z-10 pt-35 ">
-//         <HomePage />
-//       </div>
-//       <div>
-//         <About />
-//         <Project />
-//         <Skills />
-//       </div>
-//       <Footer></Footer>
-//     </div>
-//   );
-// }
 "use client";
+
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import HomePage from "./pages/home";

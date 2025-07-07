@@ -15,7 +15,7 @@ const About = () => {
   };
   
   return (
-    <div id="about" className="px-6 py-6 md:px-12 lg:px-24 min-h-[80vh]">
+    <div id="about" className="px-6 py-6 md:px-12 lg:px-24 min-h-screen">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
