@@ -8,7 +8,7 @@ import { useTheme } from "next-themes";
 import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
-  const { resolvedTheme } = useTheme();
+  const { theme, systemTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -19,7 +19,8 @@ const Navbar = () => {
     setMounted(true);
   }, []);
 
-  const dark = resolvedTheme === "dark";
+   const dark = theme === 'dark' || (theme === 'system' && systemTheme === 'dark')
+  // const dark = resolvedTheme === "dark";
 
   useEffect(() => {
     const handleScroll = () => {

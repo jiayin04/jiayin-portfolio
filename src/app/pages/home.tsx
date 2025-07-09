@@ -11,6 +11,10 @@ const HomePage = () => {
 
     const [openDialog, setOpenDialog] = useState(false);
 
+    const handleSubmitContactForm = (success: boolean) => {
+        if (success) setOpenDialog(false);
+    }
+
     return (
         <div className="w-full flex flex-col items-center min-h-[80vh]">
             <div className="flex flex-col md:flex-row items-center justify-around gap-8 pt-10 px-4">
@@ -95,7 +99,7 @@ const HomePage = () => {
                         </div>
 
                         <div>
-                            <ContactForm />
+                            <ContactForm onSubmitFormStatus= {handleSubmitContactForm}/>
                         </div>
                     </div>
                 </div>

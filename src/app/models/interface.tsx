@@ -14,3 +14,31 @@ export interface ExperienceInterface {
     date: Date;
     category: "General" | "Volunteer" | "Event" | "Job";
 }
+
+
+/* Utility */
+export type NotificationType = 'success' | 'error' | 'info' | 'warning'; 
+
+export interface NotificationData {
+    message: string;
+    type: NotificationType;
+}
+
+export interface NotificationContextType {
+  notification: NotificationData | null;
+  showNotification: (message: string, type?: NotificationType, duration?: number) => void;
+  hideNotification: () => void;
+}
+
+/*
+ * Props 
+ */
+export interface ContactFormProps {
+  onSubmitFormStatus: (success: boolean) => void;
+}
+
+export interface NotificationProps {
+  message: string;
+  type: NotificationType;
+  onClose: () => void;
+}

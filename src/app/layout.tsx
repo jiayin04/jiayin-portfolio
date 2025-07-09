@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display, } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./services/theme_provider";
+import { NotificationProvider } from "./context/notification_context";
 
 const interFont = Inter({
   variable: "--font-inter",
@@ -16,6 +17,15 @@ const playfairDisplayFont = Playfair_Display({
 export const metadata: Metadata = {
   title: "Personal Portfolio",
   description: "This is all you need to know about me!",
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+    other: {
+      rel: 'icon',
+      url: '/favicon-32x32.png',
+    },
+  },
 };
 
 export default function RootLayout({
@@ -33,11 +43,13 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
+          defaultTheme="system"
+          enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <NotificationProvider>
+            {children}
+          </NotificationProvider>
         </ThemeProvider>
       </body>
     </html>
