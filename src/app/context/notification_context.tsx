@@ -2,7 +2,8 @@
 
 import React, { createContext, useContext, useState } from 'react';
 import Notification from '../components/notification';
-import { NotificationContextType, NotificationData, NotificationType } from '../models/interface';
+import { NotificationContextType, NotificationData } from '../models/interface';
+import { NotificationType } from '../models/type';
 
 const NotificationContext = createContext<NotificationContextType>({
   notification: null,

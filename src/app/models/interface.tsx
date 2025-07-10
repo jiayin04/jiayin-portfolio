@@ -1,3 +1,5 @@
+import { NotificationType } from "./type";
+
 export interface ProjectInterface {
     title: string;
     description: string;
@@ -17,8 +19,6 @@ export interface ExperienceInterface {
 
 
 /* Utility */
-export type NotificationType = 'success' | 'error' | 'info' | 'warning'; 
-
 export interface NotificationData {
     message: string;
     type: NotificationType;

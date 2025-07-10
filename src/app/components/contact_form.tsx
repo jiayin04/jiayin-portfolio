@@ -2,6 +2,8 @@ import { supabase } from "@/lib/supabase";
 import { useNotification } from "../context/notification_context";
 import { ContactFormProps } from "../models/interface";
 import { useReducer, useState } from "react";
+import { FaSpinner } from "react-icons/fa";
+import { FormAction, FormState } from "../models/type";
 
 const validateEmail = (value: string): string | null => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -12,19 +14,6 @@ const validateMessage = (value: string): string | null => {
   return value.trim().length > 0 ? null : 'Message cannot be empty';
 };
 
-type FormState = {
-  email: string;
-  message: string;
-  emailError: string | null;
-  messageError: string | null;
-};
-
-type FormAction =
-  | { type: 'SET_EMAIL'; payload: string }
-  | { type: 'SET_MESSAGE'; payload: string }
-  | { type: 'SET_EMAIL_ERROR'; payload: string | null }
-  | { type: 'SET_MESSAGE_ERROR'; payload: string | null }
-  | { type: 'RESET_FORM' };
 
 const initialFormState: FormState = {
   email: '',
@@ -111,9 +100,8 @@ const ContactForm = ({ onSubmitFormStatus }: ContactFormProps) => {
                 dispatch({ type: 'SET_EMAIL', payload: e.target.value });
                 dispatch({ type: 'SET_EMAIL_ERROR', payload: validateEmail(e.target.value) });
               }}
-              className={`w-full px-3 py-2 bg-[hsl(var(--input))] text-[hsl(var(--foreground))] border rounded-md text-sm focus:ring-2 focus:outline-none ${
-                state.emailError ? 'border-red-500 focus:ring-red-400' : 'border-[hsl(var(--border))] focus:ring-[hsl(var(--ring))]'
-              }`}
+              className={`w-full px-3 py-2 bg-[hsl(var(--input))] text-[hsl(var(--foreground))] border rounded-md text-sm focus:ring-2 focus:outline-none ${state.emailError ? 'border-red-500 focus:ring-red-400' : 'border-[hsl(var(--border))] focus:ring-[hsl(var(--ring))]'
+                }`}
             />
             {state.emailError && <p className="text-red-500 text-xs mt-1">{state.emailError}</p>}
           </div>
@@ -131,9 +119,8 @@ const ContactForm = ({ onSubmitFormStatus }: ContactFormProps) => {
                 dispatch({ type: 'SET_MESSAGE', payload: e.target.value });
                 dispatch({ type: 'SET_MESSAGE_ERROR', payload: validateMessage(e.target.value) });
               }}
-              className={`w-full px-3 py-2 bg-[hsl(var(--input))] text-[hsl(var(--foreground))] border rounded-md text-sm focus:ring-2 focus:outline-none ${
-                state.messageError ? 'border-red-500 focus:ring-red-400' : 'border-[hsl(var(--border))] focus:ring-[hsl(var(--ring))]'
-              }`}
+              className={`w-full px-3 py-2 bg-[hsl(var(--input))] text-[hsl(var(--foreground))] border rounded-md text-sm focus:ring-2 focus:outline-none ${state.messageError ? 'border-red-500 focus:ring-red-400' : 'border-[hsl(var(--border))] focus:ring-[hsl(var(--ring))]'
+                }`}
             />
             {state.messageError && <p className="text-red-500 text-xs mt-1">{state.messageError}</p>}
           </div>
@@ -143,7 +130,12 @@ const ContactForm = ({ onSubmitFormStatus }: ContactFormProps) => {
             className="w-full bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] font-medium text-sm py-2 rounded-md hover:brightness-110 transition duration-300 cursor-pointer"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Sending...' : 'Send'}
+            {isSubmitting ? (
+              <span className="flex items-center justify-center gap-2">
+                Sending
+                <FaSpinner className="animate-spin" />
+              </span>
+            ) : 'Send'}
           </button>
         </form>
       </div>

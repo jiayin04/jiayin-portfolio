@@ -1,11 +1,13 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 import Link from 'next/link';
 import { Typewriter } from "react-simple-typewriter";
 import ContactForm from '../components/contact_form';
+import { supabase } from '@/lib/supabase';
+import { ProfileInfo } from '../models/type';
 
 const HomePage = () => {
 
@@ -14,6 +16,25 @@ const HomePage = () => {
     const handleSubmitContactForm = (success: boolean) => {
         if (success) setOpenDialog(false);
     }
+
+    const [profileInfo, setProfileInfo] = useState<ProfileInfo | null>(null);
+
+    useEffect(() => {
+        const fetchProfileInfo = async () => {
+            const { data, error } = await supabase
+                .from('profile_info')
+                .select('email, github, linkedin')
+                .single();
+
+            if (error) {
+                console.error("Error fetching profile info: ", error.message);
+            } else {
+                setProfileInfo(data);
+            }
+        };
+
+        fetchProfileInfo();
+    }, []);
 
     return (
         <div className="w-full flex flex-col items-center min-h-[80vh]">
@@ -84,22 +105,33 @@ const HomePage = () => {
 
                         {/* Social links */}
                         <div className="flex flex-row gap-8 p-3 justify-center">
-                            <Link href="https://github.com/jiayin04" target="_blank">
-                                <Image src="https://skillicons.dev/icons?i=github" width={50} height={50} alt="GitHub" />
-                            </Link>
-                            <Link href="https://www.linkedin.com/in/jia-yin-kok-9767b528a/" target="_blank">
-                                <Image src="https://skillicons.dev/icons?i=linkedin" width={50} height={50} alt="LinkedIn" />
-                            </Link>
-                            {/* <Link href="https://discordapp.com/users/1006886530612203640" target="_blank">
-                                <Image src="https://skillicons.dev/icons?i=discord" width={50} height={50} alt="Discord" />
-                            </Link> */}
-                            <Link href={"mailto:jiayinkok@gmail.com"}>
-                                <Image src={"https://skillicons.dev/icons?i=gmail"} width={50} height={50} alt="Gmail" />
-                            </Link>
+                            {profileInfo?.github &&
+                                (
+                                    <Link href={profileInfo.github} target="_blank">
+                                        <Image src="https://skillicons.dev/icons?i=github" width={50} height={50} alt="GitHub" />
+                                    </Link>
+                                )
+                            }
+                            {profileInfo?.linkedin &&
+                                (
+                                    <Link href={profileInfo.linkedin} target="_blank">
+                                        <Image src="https://skillicons.dev/icons?i=linkedin" width={50} height={50} alt="LinkedIn" />
+                                    </Link>
+                                )
+                            }
+
+                            {profileInfo?.email &&
+                                (
+                                    <Link href={`mailto:${profileInfo.email}`}>
+                                        <Image src={"https://skillicons.dev/icons?i=gmail"} width={50} height={50} alt="Gmail" />
+                                    </Link>
+                                )
+                            }
+
                         </div>
 
                         <div>
-                            <ContactForm onSubmitFormStatus= {handleSubmitContactForm}/>
+                            <ContactForm onSubmitFormStatus={handleSubmitContactForm} />
                         </div>
                     </div>
                 </div>

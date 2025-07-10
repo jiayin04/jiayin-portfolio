@@ -1,19 +1,41 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/lib/supabase";
 
 const About = () => {
 
+  const [resumeURL, setResumeURL] = useState<string | null>(null);
+
+  useEffect(() => {
+    const getResumeUrl = async () => {
+      const { data, error } = await supabase
+        .storage
+        .from("resume")
+        .createSignedUrl("Resume - KOK JIA YIN.pdf", 60);
+
+      if (error) {
+        console.error("Error fetching signed URL:", error.message);
+      } else {
+        setResumeURL(data.signedUrl);
+      }
+    };
+
+    getResumeUrl();
+  }, []);
+
   const handleDownloadResume = () => {
+    if (!resumeURL) return;
     const link = document.createElement("a");
-    link.href = "/Resume [KOK JIA YIN].pdf";
+    link.href = resumeURL;
     link.download = "Kok Jia Yin_Resume.pdf";
+    link.target = "_blank";
     link.click();
   };
-  
+
   return (
     <div id="about" className="px-6 py-6 md:px-12 lg:px-24 min-h-screen">
       <motion.div
