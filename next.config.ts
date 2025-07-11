@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
         hostname: 'skillicons.dev',
         pathname: '/icons',
       },
+      {
+        protocol: 'https',
+        hostname: 'gclucvsaudagmujowfnd.supabase.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.dicebear.com',
+      },
     ],
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; img-src * data: blob:;",

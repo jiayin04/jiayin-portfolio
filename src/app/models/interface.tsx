@@ -5,8 +5,9 @@ export interface ProjectInterface {
     description: string;
     image: string;
     tags: string[];
-    projectLink: string;
-    demoLink: string;
+    project_link: string;
+    demo_link: string;
+    created_at: Date;
 }
 
 export interface ExperienceInterface {
@@ -41,4 +42,8 @@ export interface NotificationProps {
   message: string;
   type: NotificationType;
   onClose: () => void;
+}
+
+export interface ProjectCardProps {
+    project: ProjectInterface;
 }

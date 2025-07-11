@@ -3,81 +3,33 @@
 import { motion } from "framer-motion";
 import ProjectCard from "../components/project_card";
 import { ProjectInterface } from "../models/interface";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 const Project = () => {
-    const projects: ProjectInterface[] = [
-        {
-            title: "Smart City Management",
-            description: "A platform for real-time traffic, waste, and flood management.",
-            image: "/images/smart-city.jpg",
-            tags: ["Web App", "React.js", "Tailwind CSS"],
-            projectLink: "https://example.com",
-            demoLink: "https://example.com",
-        },
-        {
-            title: "Car Park System",
-            description: "An app that allows users to find and pay for parking easily.",
-            image: "/images/car-park.jpg",
-            tags: ["Mobile App", "Next.js", "Stripe"],
-            projectLink: "https://example.com",
-            demoLink: "https://example.com",
-        },
 
-        {
-            title: "Car Park System",
-            description: "An app that allows users to find and pay for parking easily.",
-            image: "/images/car-park.jpg",
-            tags: ["Mobile App", "Next.js", "Stripe"],
-            projectLink: "https://example.com",
-            demoLink: "",
-        },
-        {
-            title: "Car Park System",
-            description: "An app that allows users to find and pay for parking easily.",
-            image: "/images/car-park.jpg",
-            tags: ["Mobile App", "Next.js", "Stripe"],
-            projectLink: "https://example.com",
-            demoLink: "",
-        },
-        {
-            title: "Car Park System",
-            description: "An app that allows users to find and pay for parking easily.",
-            image: "/images/car-park.jpg",
-            tags: ["Mobile App", "Next.js", "Stripe"],
-            projectLink: "https://example.com",
-            demoLink: "",
-        },
-        {
-            title: "Car Park System",
-            description: "An app that allows users to find and pay for parking easily.",
-            image: "/images/car-park.jpg",
-            tags: ["Mobile App", "Next.js", "Stripe"],
-            projectLink: "https://example.com",
-            demoLink: "",
-        },
-        {
-            title: "Car Park System",
-            description: "An app that allows users to find and pay for parking easily.",
-            image: "/images/car-park.jpg",
-            tags: ["Mobile App", "Next.js", "Stripe"],
-            projectLink: "https://example.com",
-            demoLink: "",
-        },
-        {
-            title: "Car Park System",
-            description: "An app that allows users to find and pay for parking easily.",
-            image: "/images/car-park.jpg",
-            tags: ["Mobile App", "Next.js", "Stripe"],
-            projectLink: "https://example.com",
-            demoLink: "",
-        },
+    const [projects, setProjects] = useState<ProjectInterface[]>([]);
 
-    ];
+    useEffect(() => {
+        const getProjects = async () => {
+            const { data, error } = await supabase
+                .from('projects')
+                .select('title, description, image, tags, project_link, demo_link, created_at')
+                .order('created_at', { ascending: false })
+
+            if (error) {
+                console.error("Error fetching the project: ", error.message);
+            } else {
+                setProjects(data);
+            }
+        };
+
+        getProjects();
+    }, [])
 
     const [showAll, setShowAll] = useState(false);
 
-    const visibleProjects = showAll ? projects : projects.slice(0, 8);
+    const visibleProjects = showAll ? projects : projects?.slice(0, 8);
 
     return (
         <div
@@ -112,7 +64,7 @@ const Project = () => {
                         whileInView={{ opacity: 1 }}
                         transition={{ duration: 0.6, ease: "easeIn" }}
                     >
-                        {visibleProjects.map((project, index) => (
+                        {visibleProjects?.map((project, index) => (
                             <motion.div
                                 key={index}
                                 variants={{
@@ -127,7 +79,7 @@ const Project = () => {
                     </motion.div>
 
                     {/* View More Button */}
-                    {projects.length > 8 && (
+                    {projects?.length > 8 && (
                         <div className="flex justify-center mt-20">
                             <button
                                 onClick={() => setShowAll(!showAll)}
