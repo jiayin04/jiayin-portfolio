@@ -1,55 +1,36 @@
-import {
-    Code2,
-    FileCode,
-    Database,
-    Languages,
-    Server,
-    Terminal,
-    GitBranch,
-    Github,
-    FlaskConical,
-    Figma,
-    Wrench,
-    Braces,
-    Atom,
-    Settings2,
-} from "lucide-react";
+import { Code2 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState } from "react";
-
-const skills = {
-    Languages: [
-        { name: "JavaScript", icon: <Code2 />, description: "Dynamic web apps" },
-        { name: "TypeScript", icon: <Braces />, description: "Typed JavaScript" },
-        { name: "HTML", icon: <FileCode />, description: "Web structure" },
-        { name: "CSS", icon: <FileCode />, description: "Web styling" },
-        { name: "SQL", icon: <Database />, description: "Database queries" },
-        { name: "Java", icon: <FlaskConical />, description: "OOP language" },
-        { name: "PHP", icon: <Braces />, description: "Backend scripting" },
-    ],
-    Frameworks: [
-        { name: "React.js", icon: <Atom />, description: "Frontend library" },
-        { name: "Next.js", icon: <Atom />, description: "SSR React framework" },
-        { name: "Tailwind CSS", icon: <Settings2 />, description: "Utility CSS" },
-        { name: "Node.js", icon: <Server />, description: "Backend runtime" },
-        { name: "Flutter", icon: <Languages />, description: "Mobile SDK" },
-        { name: "Radzen", icon: <Wrench />, description: "Low-code platform" },
-    ],
-    Tools: [
-        { name: "Git", icon: <GitBranch />, description: "Version control" },
-        { name: "GitHub", icon: <Github />, description: "Code hosting" },
-        { name: "Postman", icon: <Terminal />, description: "API testing" },
-        { name: "Figma", icon: <Figma />, description: "UI design" },
-        { name: "VS Code", icon: <FileCode />, description: "Code editor" },
-        { name: "Talend", icon: <Database />, description: "ETL tool" },
-        { name: "SQL Server", icon: <Database />, description: "RDBMS" },
-        { name: "Android Studio", icon: <Settings2 />, description: "Android IDE" },
-    ],
-};
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
+import { iconComponents } from "../utils/icons";
+import { Skill } from "../models/interface";
 
 const Skills = () => {
 
-    const [expandedCategories, setExpandedCategories] = useState<{ [key: string]: boolean }>({});
+    const [skills, setSkills] = useState<Record<string, Skill[]>>({});
+    const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data } = await supabase
+                .from('skills')
+                .select('*, categories:category_id(name)');
+
+            if (data) {
+                const grouped: Record<string, Skill[]> = {};
+                data?.forEach(skill => {
+                    const category = skill.categories?.name;
+                    if (!grouped[category]) grouped[category] = [];
+                    grouped[category].push(skill as Skill);
+                });
+
+                setSkills(grouped);
+            }
+
+        };
+
+        fetchData();
+    }, [])
 
     const toggleCategory = (category: string) => {
         setExpandedCategories((prev) => ({
@@ -60,7 +41,7 @@ const Skills = () => {
 
     return (
         <div
-            className="min-h-screen px-4 py-16"
+            className="min-h-screen px-4 py-20"
             style={{
                 backgroundImage: `linear-gradient(to bottom, hsl(var(--section-skills-from)), hsl(var(--section-skills-to)))`,
             }}
@@ -70,8 +51,7 @@ const Skills = () => {
 
                 {Object.entries(skills).map(([category, items]) => {
 
-                    const isExpanded = expandedCategories[category] || false;
-                    const visibleItems = isExpanded ? items : items.slice(0, 12);
+                    const visibleItems = expandedCategories[category] ? items : items.slice(0, 12);
 
                     return (
                         <div key={category} className="mb-10">
@@ -79,25 +59,31 @@ const Skills = () => {
                                 {category}
                             </h3>
                             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
-                                {visibleItems.map((skill, index) => (
-                                    <motion.div
-                                        key={skill.name}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: index * 0.05 }}
-                                        className="relative bg-[hsl(var(--card-bg))] border border-slate-700 rounded-lg p-3 flex flex-col items-center justify-center h-24 overflow-hidden group shadow hover:shadow-blue-500/20 transition  cursor-pointer"
-                                    >
-                                        {/* relative bg-slate-800 border border-slate-700 rounded-lg p-3 flex flex-col items-center justify-center h-24 overflow-hidden group shadow hover:shadow-blue-500/20 transition  cursor-pointer */}
-                                        <div className="text-xl text-blue-400 mb-1">{skill.icon}</div>
-                                        <p className="text-sm font-medium z-10">{skill.name}</p>
+                                {visibleItems.map((skill, index) => {
+                                    const Icon = skill.icon_name in iconComponents
+                                        ? iconComponents[skill.icon_name as keyof typeof iconComponents]
+                                        : Code2;
+                                    return (
+                                        <motion.div
+                                            key={skill.name}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: index * 0.05 }}
+                                            className="relative bg-[hsl(var(--card-bg))] border border-slate-700 rounded-lg p-3 flex flex-col items-center justify-center h-24 overflow-hidden group shadow hover:shadow-blue-500/20 transition  cursor-pointer"
+                                        >
+                                            <Icon className="text-xl text-blue-400 mb-1" />
 
-                                        {/* Overlay on hover */}
-                                        <div className="absolute inset-0 bg-[hsl(var(--card))] bg-opacity-90 flex items-center justify-center px-2 text-xs text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg z-10000">
-                                            {skill.description}
-                                        </div>
-                                    </motion.div>
-                                ))}
+                                            <p className="text-sm font-medium z-10">{skill.name}</p>
+
+                                            {/* Overlay on hover */}
+                                            <div className="absolute inset-0 bg-[hsl(var(--card))] bg-opacity-90 flex items-center justify-center px-2 text-xs text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg z-10000">
+                                                {skill.description}
+                                            </div>
+                                        </motion.div>
+                                    );
+
+                                })}
                             </div>
 
                             {/* View More Button */}
@@ -108,7 +94,7 @@ const Skills = () => {
                                         className="px-5 py-2 border rounded-full text-sm font-medium transition-all duration-200 
                       border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white"
                                     >
-                                        {isExpanded ? "View Less" : "View More"}
+                                        {expandedCategories[category] ? "View Less" : "View More"}
                                     </button>
                                 </div>
                             )}

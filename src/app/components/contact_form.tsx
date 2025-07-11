@@ -14,7 +14,6 @@ const validateMessage = (value: string): string | null => {
   return value.trim().length > 0 ? null : 'Message cannot be empty';
 };
 
-
 const initialFormState: FormState = {
   email: '',
   message: '',

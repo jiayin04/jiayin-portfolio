@@ -1,28 +1,38 @@
+import { iconComponents, IconKey } from "../utils/icons";
 import { NotificationType } from "./type";
 
 export interface ProjectInterface {
-    title: string;
-    description: string;
-    image: string;
-    tags: string[];
-    project_link: string;
-    demo_link: string;
-    created_at: Date;
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  project_link: string;
+  demo_link: string;
+  created_at: Date;
 }
 
 export interface ExperienceInterface {
-    title: string;
-    desc: string;
-    image?: string;
-    date: Date;
-    category: "General" | "Volunteer" | "Event" | "Job";
+  title: string;
+  desc: string;
+  image?: string;
+  date: Date;
+  category: "General" | "Volunteer" | "Event" | "Job";
+}
+
+export interface Skill {
+  name: string;
+  description: string;
+  icon_name: keyof typeof iconComponents;
+  categories: {
+    name: string;
+  };
 }
 
 
 /* Utility */
 export interface NotificationData {
-    message: string;
-    type: NotificationType;
+  message: string;
+  type: NotificationType;
 }
 
 export interface NotificationContextType {
@@ -45,5 +55,5 @@ export interface NotificationProps {
 }
 
 export interface ProjectCardProps {
-    project: ProjectInterface;
+  project: ProjectInterface;
 }
