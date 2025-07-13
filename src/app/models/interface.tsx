@@ -15,8 +15,9 @@ export interface ExperienceInterface {
   title: string;
   desc: string;
   image?: string;
-  date: Date;
-  category: "General" | "Volunteer" | "Event" | "Job";
+  from_date: Date;
+  to_date: Date | null;
+  category: "General" | "Competition" | "Event" | "Job";
 }
 
 export interface Skill {

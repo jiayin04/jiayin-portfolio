@@ -3,36 +3,31 @@
 import React, { useEffect, useState } from "react";
 import { ExperienceInterface } from "../models/interface";
 import { motion, AnimatePresence } from "framer-motion";
+import { supabase } from "@/lib/supabase";
 
 
 const Experience = () => {
 
-    const experiences: ExperienceInterface[] = [
-        {
-            title: "River Clean-up 2023",
-            desc: "Volunteered to clean riverbanks with 30+ participants.",
-            image: "/images/river.jpg",
-            date: new Date(),
-            category: "Volunteer",
-        },
-        {
-            title: "Youth Code Camp",
-            desc: "Mentored high school students in web dev.",
-            image: "/images/code-camp.jpg",
-            date: new Date(),
-            category: "Event",
-        },
-        {
-            title: "Climate Action Forum",
-            desc: "Spoke about youth involvement in sustainability.",
-            image: "/images/climate.jpg",
-            date: new Date(),
-            category: "Job",
-        },
-    ];
-    const categories = ["General", "Volunteer", "Event", "Job"];
-
+    const [experiences, setExperiences] = useState<ExperienceInterface[]>([]);
     const [selected, setSelected] = useState("General");
+    const categories = ["General", "Competition", "Event", "Job"];
+
+    useEffect(() => {
+        const fetchExperiences = async () => {
+            const { data, error } = await supabase
+                .from('experiences')
+                .select('title, desc, image, category, from_date, to_date')
+                .order('from_date', { ascending: false });
+
+            if (error) {
+                console.error("Error fetching data: ", error);
+                return [];
+            } else {
+                setExperiences(data);
+            }
+        }
+        fetchExperiences();
+    }, [])
 
     const filtered = selected === "General"
         ? experiences
@@ -86,6 +81,9 @@ const Experience = () => {
                         <AnimatePresence>
                             {filtered.map((item, index) => {
                                 const isLeft = index % 2 === 0;
+                                const dateText = item.to_date
+                                    ? `${new Date(item.from_date).toDateString()} - ${new Date(item.to_date).toDateString()}`
+                                    : `${new Date(item.from_date).toDateString()}`;
                                 return (
                                     <motion.div
                                         key={item.title}
@@ -103,7 +101,7 @@ const Experience = () => {
                                                 }`}
                                         >
                                             <div className="bg-[hsl(var(--card-bg))] border border-[hsl(var(--border))] rounded-xl p-5 shadow-lg backdrop-blur-md">
-                                                <p className="text-xs text-gray-500 mb-1">{item.date.toDateString()}</p>
+                                                <p className="text-xs text-gray-500 mb-1">{dateText}</p>
                                                 <h3 className="text-lg font-semibold text-[hsl(var(--foreground))]">
                                                     {item.title}
                                                 </h3>
