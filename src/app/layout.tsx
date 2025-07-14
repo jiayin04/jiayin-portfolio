@@ -12,6 +12,8 @@ const interFont = Inter({
 const playfairDisplayFont = Playfair_Display({
   variable: "--font-playfairdisplay",
   style: "italic",
+  subsets: ['latin'],
+  preload: true,
 });
 
 export const metadata: Metadata = {
