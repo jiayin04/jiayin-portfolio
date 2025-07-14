@@ -16,13 +16,14 @@ const Experience = () => {
         const fetchExperiences = async () => {
             const { data, error } = await supabase
                 .from('experiences')
-                .select('title, desc, image, category, from_date, to_date')
+                .select('title, desc, image, category, from_date, to_date, proof_link, organization')
                 .order('from_date', { ascending: false });
 
             if (error) {
                 console.error("Error fetching data: ", error);
                 return [];
             } else {
+                console.log(data)
                 setExperiences(data);
             }
         }
@@ -82,8 +83,17 @@ const Experience = () => {
                             {filtered.map((item, index) => {
                                 const isLeft = index % 2 === 0;
                                 const dateText = item.to_date
-                                    ? `${new Date(item.from_date).toDateString()} - ${new Date(item.to_date).toDateString()}`
-                                    : `${new Date(item.from_date).toDateString()}`;
+                                    ? `${new Date(item.from_date).toLocaleString("default", {
+                                        month: "short",
+                                        year: "numeric",
+                                    })} – ${new Date(item.to_date).toLocaleString("default", {
+                                        month: "short",
+                                        year: "numeric",
+                                    })}`
+                                    : `${new Date(item.from_date).toLocaleString("default", {
+                                        month: "short",
+                                        year: "numeric",
+                                    })}`;
                                 return (
                                     <motion.div
                                         key={item.title}
@@ -100,14 +110,68 @@ const Experience = () => {
                                             className={`w-full md:w-1/2 ${isLeft ? "md:pl-10" : "md:pr-10"
                                                 }`}
                                         >
-                                            <div className="bg-[hsl(var(--card-bg))] border border-[hsl(var(--border))] rounded-xl p-5 shadow-lg backdrop-blur-md">
+                                            <div className="bg-[hsl(var(--card-bg))] border border-[hsl(var(--border))] rounded-xl p-5 shadow-lg backdrop-blur-md space-y-3">
+
+                                                <div className="flex items-center justify-between text-xs text-gray-500 flex-wrap gap-2">
+                                                    {item.organization &&
+                                                        <span className="text-xs px-2 py-1 bg-[hsl(var(--accent))] rounded-md text-[hsl(var(--accent-foreground))]">
+                                                            {item.organization}
+                                                        </span>
+                                                    }
+                                                    <span className="text-gray-400">{dateText}</span>
+                                                </div>
+
+                                                <h3 className="text-xl font-semibold text-[hsl(var(--foreground))]">
+                                                    {item.title}
+                                                </h3>
+
+                                                <p className="text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
+                                                    {item.desc}
+                                                </p>
+
+                                                {item.proof_link && (
+                                                    <a
+                                                        href={item.proof_link}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center gap-1 text-sm font-medium text-[hsl(var(--primary))] hover:underline"
+                                                    >
+                                                        ↗ View more
+                                                    </a>
+                                                )}
+
+                                                {item.image && (
+                                                    <img
+                                                        src={item.image}
+                                                        alt={item.title}
+                                                        className="w-full h-48 object-cover rounded-lg border border-[hsl(var(--border))] shadow-sm"
+                                                    />
+                                                )}
+                                            </div>
+
+                                            {/* <div className="bg-[hsl(var(--card-bg))] border border-[hsl(var(--border))] rounded-xl p-5 shadow-lg backdrop-blur-md">
                                                 <p className="text-xs text-gray-500 mb-1">{dateText}</p>
+                                                {item.organization && (
+                                                    <span className="text-xs px-2 py-1 bg-[hsl(var(--accent))] rounded-md">
+                                                        {item.organization}
+                                                    </span>
+                                                )}
                                                 <h3 className="text-lg font-semibold text-[hsl(var(--foreground))]">
                                                     {item.title}
                                                 </h3>
                                                 <p className="text-sm text-[hsl(var(--muted-foreground))] mt-1">
                                                     {item.desc}
                                                 </p>
+                                                {item.proof_link && (
+                                                    <a
+                                                        href={item.proof_link}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="mt-3 inline-block text-xs text-[hsl(var(--primary))] hover:underline"
+                                                    >
+                                                        ↗ View more
+                                                    </a>
+                                                )}
                                                 {item.image && (
                                                     <img
                                                         src={item.image}
@@ -115,7 +179,7 @@ const Experience = () => {
                                                         className="mt-3 w-full h-40 object-cover rounded-lg shadow-md"
                                                     />
                                                 )}
-                                            </div>
+                                            </div> */}
                                         </div>
 
                                         {/* Dot + Spacer */}

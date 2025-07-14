@@ -18,6 +18,8 @@ export interface ExperienceInterface {
   from_date: Date;
   to_date: Date | null;
   category: "General" | "Competition" | "Event" | "Job";
+  proof_link: string;
+  organization: string;
 }
 
 export interface Skill {
