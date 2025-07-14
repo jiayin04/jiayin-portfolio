@@ -10,6 +10,7 @@ const Experience = () => {
 
     const [experiences, setExperiences] = useState<ExperienceInterface[]>([]);
     const [selected, setSelected] = useState("General");
+    const [showAll, setShowAll] = useState(false);
     const categories = ["General", "Competition", "Event", "Job"];
 
     useEffect(() => {
@@ -33,6 +34,8 @@ const Experience = () => {
     const filtered = selected === "General"
         ? experiences
         : experiences.filter((item) => item.category === selected);
+
+    const showExperiences = showAll ? filtered : filtered?.slice(0, 10);
 
     return (
         <div
@@ -80,17 +83,29 @@ const Experience = () => {
 
                     <div className="space-y-10 z-10 relative">
                         <AnimatePresence>
-                            {filtered.map((item, index) => {
+                            {showExperiences.map((item, index) => {
                                 const isLeft = index % 2 === 0;
                                 const dateText = item.to_date
-                                    ? `${new Date(item.from_date).toLocaleString("default", {
-                                        month: "short",
-                                        year: "numeric",
-                                    })} – ${new Date(item.to_date).toLocaleString("default", {
-                                        month: "short",
-                                        year: "numeric",
-                                    })}`
+                                    ? (new Date(item.from_date).getMonth() === new Date(item.to_date).getMonth() &&
+                                        new Date(item.from_date).getFullYear() === new Date(item.to_date).getFullYear()
+                                        ? `${new Date(item.from_date).toLocaleString("default", {
+                                            day: "numeric",
+                                            month: "short",
+                                            year: "numeric",
+                                        })} – ${new Date(item.to_date).toLocaleString("default", {
+                                            day: "numeric",
+                                            month: "short",
+                                            year: "numeric",
+                                        })}`
+                                        : `${new Date(item.from_date).toLocaleString("default", {
+                                            month: "short",
+                                            year: "numeric",
+                                        })} – ${new Date(item.to_date).toLocaleString("default", {
+                                            month: "short",
+                                            year: "numeric",
+                                        })}`)
                                     : `${new Date(item.from_date).toLocaleString("default", {
+                                        day: "numeric",
                                         month: "short",
                                         year: "numeric",
                                     })}`;
@@ -149,51 +164,41 @@ const Experience = () => {
                                                 )}
                                             </div>
 
-                                            {/* <div className="bg-[hsl(var(--card-bg))] border border-[hsl(var(--border))] rounded-xl p-5 shadow-lg backdrop-blur-md">
-                                                <p className="text-xs text-gray-500 mb-1">{dateText}</p>
-                                                {item.organization && (
-                                                    <span className="text-xs px-2 py-1 bg-[hsl(var(--accent))] rounded-md">
-                                                        {item.organization}
-                                                    </span>
-                                                )}
-                                                <h3 className="text-lg font-semibold text-[hsl(var(--foreground))]">
-                                                    {item.title}
-                                                </h3>
-                                                <p className="text-sm text-[hsl(var(--muted-foreground))] mt-1">
-                                                    {item.desc}
-                                                </p>
-                                                {item.proof_link && (
-                                                    <a
-                                                        href={item.proof_link}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="mt-3 inline-block text-xs text-[hsl(var(--primary))] hover:underline"
-                                                    >
-                                                        ↗ View more
-                                                    </a>
-                                                )}
-                                                {item.image && (
-                                                    <img
-                                                        src={item.image}
-                                                        alt={item.title}
-                                                        className="mt-3 w-full h-40 object-cover rounded-lg shadow-md"
-                                                    />
-                                                )}
-                                            </div> */}
                                         </div>
 
                                         {/* Dot + Spacer */}
                                         <div className="hidden md:flex flex-col items-center justify-center w-0 md:w-[20px]">
                                             <div className="w-4 h-4 bg-[hsl(var(--primary))] rounded-full z-10" />
                                         </div>
+
                                     </motion.div>
                                 );
                             })}
                         </AnimatePresence>
                     </div>
+
                 </div>
+                {filtered?.length > 10 &&
+                    (
+                        <div className="flex justify-center mt-16">
+                            <button
+                                onClick={() => setShowAll(!showAll)}
+                                className="relative px-6 py-3 font-medium text-blue-500 rounded-full group"
+                            >
+                                <span className="relative z-10 flex items-center gap-2">
+                                    {showAll ? "Show Less" : "Explore More"}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d={showAll ? "M18 15l-6-6-6 6" : "M6 9l6 6 6-6"} />
+                                    </svg>
+                                </span>
+                                <span className="absolute inset-0 rounded-full border-2 border-blue-400 group-hover:border-blue-500 transition-all duration-300 animate-pulse"></span>
+                                <span className="absolute inset-0 rounded-full bg-blue-400 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+                            </button>
+                        </div>
+                    )
+                }
             </div>
-        </div>
+        </div >
     );
 
 }
