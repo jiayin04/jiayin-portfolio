@@ -24,7 +24,6 @@ const Experience = () => {
                 console.error("Error fetching data: ", error);
                 return [];
             } else {
-                console.log(data)
                 setExperiences(data);
             }
         }

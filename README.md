@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💻 Kok Jia Yin — Personal Portfolio
 
-## Getting Started
+Welcome to my personal portfolio website — a curated space where I showcase my **projects**, **skills**, and **passion** as a developer and problem solver. This site reflects my journey in tech, highlighting the things I’ve built, learned, and enjoyed creating.
 
-First, run the development server:
+<br />
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🌐 Live Demo & Connect Me
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[![Portfolio](https://img.shields.io/badge/Visit_Portfolio-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://jiayin-portfolio.vercel.app/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jia-yin-kok-9767b528a)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<br />
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Tech Stack
 
-## Learn More
+| Category       | Tools & Frameworks                             |
+| -------------- | ---------------------------------------------- |
+| **Frontend**   | Next.js, TypeScript, Tailwind CSS              |
+| **Backend**    | Supabase                                       |
+| **UX & Motion**| Framer Motion, Lucide Icons                    |
+| **Deployment** | Vercel                                         |
+| **Versioning** | Git & GitHub                                   |
 
-To learn more about Next.js, take a look at the following resources:
+<br />
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧠 What I Learned
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- 🧭 Creating fluid, engaging animations with **Framer Motion**
+- 🎨 Building stylish and responsive UI with **Tailwind CSS**
+- 🧩 Managing page state and routing using **Next.js**
+- 🌗 Designing for scalability and accessibility with reusable components
+- ⚡ Streamlining deployment pipelines and optimizations via **Vercel**
 
-## Deploy on Vercel
+<br />
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 💬 Let's Connect!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+I'm open to **collaborations**, **internships**, or just a friendly chat on all things tech and design.
+
+📫 Message me on [**LinkedIn**](https://www.linkedin.com/in/jia-yin-kok-9767b528a) or check out the [**live site**](https://jiayin-portfolio.vercel.app/)!
+
+
+<br />
+
+
+
+> 🔧 Built with passion, coffee, and curiosity.
