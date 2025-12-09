@@ -113,7 +113,7 @@ const Navbar = () => {
               <li key={id} className="relative">
                 <button
                   onClick={() => scrollToSection(id)}
-                  className={`px-4 py-2 rounded-full border text-sm font-medium
+                  className={`px-4 py-2 rounded-full border text-sm font-medium cursor-pointer
                   ${activeSection === id
                       ? dark
                         ? "text-blue-400 border-white/10 bg-white/10"
